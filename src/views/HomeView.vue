@@ -119,7 +119,7 @@
           <!-- Poster Image with Gradient Overlay -->
           <div class="poster-wrapper">
             <v-img :src="movie.image" height="340" cover class="rounded-t-24 poster-img">
-              <template v-slot:placeholder>
+              <template #placeholder>
                 <div class="d-flex align-center justify-center fill-height">
                   <v-progress-circular indeterminate color="indigo-accent-2"></v-progress-circular>
                 </div>
@@ -297,11 +297,9 @@ const sortOptions = ['Popularity', 'Rating: High to Low', 'Price: Low to High', 
 
 onMounted(async () => {
   try {
-    // Single static db.json file fetch kar rahe hain
     const res = await fetch('/db.json');
     const data = await res.json();
     
-    // Exact arrays assign kar rahe hain
     movies.value = data.movies || [];
     upcomingMovies.value = data.upcomingMovies || [];
   } catch (err) {
@@ -493,7 +491,7 @@ const filteredMovies = computed(() => {
   font-size: 0.85rem;
   box-shadow: 0 0 12px rgba(251, 191, 36, 0.3);
   display: flex;
-  align-center: center;
+  align-items: center;
   gap: 4px;
 }
 
@@ -504,7 +502,7 @@ const filteredMovies = computed(() => {
   border-radius: 12px;
   font-size: 0.7rem;
   font-weight: 800;
-  text-uppercase: uppercase;
+  text-transform: uppercase;
   backdrop-filter: blur(4px);
 }
 

@@ -384,6 +384,67 @@
       "paymentMethod": "UPI",
       "bookingDate": "24/07/2026",
       "id": "3R5a6IJoITQ"
+    },
+    {
+      "userId": "pctOTRqjyLM",
+      "userEmail": "naman@test.com",
+      "movieTitle": "Avatar: The Way of Water",
+      "theatre": "PVR Superplex, Mall of India",
+      "theatreName": "PVR Superplex, Mall of India",
+      "showtime": "2026-07-25 | 01:30 PM",
+      "seats": [
+        "C3",
+        "C4",
+        "C5"
+      ],
+      "snacks": [
+        {
+          "id": 1,
+          "name": "Large Popcorn (Salted)",
+          "price": 290,
+          "icon": "🍿",
+          "qty": 1
+        },
+        {
+          "id": 2,
+          "name": "Pepsi / Coca Cola (500ml)",
+          "price": 180,
+          "icon": "🥤",
+          "qty": 1
+        }
+      ],
+      "totalPaid": 1420,
+      "paymentMethod": "Card",
+      "bookingDate": "24/07/2026",
+      "id": "esH2cS0cadA"
+    },
+    {
+      "userId": "pctOTRqjyLM",
+      "userEmail": "naman@test.com",
+      "movieTitle": "Cinema Snacks Pass 🍿",
+      "theatre": "Snacks Concession Counter",
+      "showtime": "Pickup at Counter",
+      "seats": [
+        "NA"
+      ],
+      "snacks": [
+        {
+          "id": "f1",
+          "name": "Caramel Popcorn (Large)",
+          "price": 320,
+          "qty": 1
+        },
+        {
+          "id": "f2",
+          "name": "Cheese & Butter Popcorn",
+          "price": 290,
+          "qty": 1
+        }
+      ],
+      "totalPaid": 720,
+      "paymentMethod": "Cash Counter",
+      "bookingDate": "24/07/2026",
+      "id": "CIMNiM2Amd4"
     }
   ],
   "foodItems": [

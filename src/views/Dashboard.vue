@@ -77,7 +77,7 @@
                   <span class="text-caption text-grey d-block">SHOWTIME & DATE</span>
                   <span class="text-body-2 font-weight-bold text-white">
                     {{ ticket.showtime || 'Standard Show' }} 
-                    <template v-if="ticket.date || ticket.bookingDate">({{ ticket.date || ticket.bookingDate }})</template>
+                    <span v-if="ticket.date || ticket.bookingDate">({{ ticket.date || ticket.bookingDate }})</span>
                   </span>
                 </div>
 
@@ -185,7 +185,6 @@ const fetchBookings = async () => {
   loading.value = true;
   let fetchedList = [];
 
-  // 1. Fetch from static db.json safely
   try {
     const res = await fetch('/db.json');
     if (res.ok) {
@@ -196,10 +195,7 @@ const fetchBookings = async () => {
     console.warn('Could not fetch static db.json, relying on localStorage:', err);
   }
 
-  // 2. Fetch local storage orders (created during seat selection or food order)
   const localBookings = JSON.parse(localStorage.getItem('userBookings') || '[]');
-  
-  // Combine both sources without duplicates
   const combined = [...localBookings, ...fetchedList];
   const uniqueBookingsMap = new Map();
   combined.forEach(item => {
@@ -208,7 +204,6 @@ const fetchBookings = async () => {
   
   const allBookings = Array.from(uniqueBookingsMap.values());
 
-  // 3. Filter by current logged in user
   const currentUser = authStore?.user || JSON.parse(localStorage.getItem('currentUser'));
 
   if (currentUser) {
@@ -228,12 +223,10 @@ onMounted(() => {
 
 const cancelTicket = (id) => {
   if (confirm('Are you sure you want to cancel this booking?')) {
-    // Local storage update
     const localBookings = JSON.parse(localStorage.getItem('userBookings') || '[]');
     const updatedLocal = localBookings.filter(b => String(b.id) !== String(id));
     localStorage.setItem('userBookings', JSON.stringify(updatedLocal));
 
-    // Reactive State Update
     bookings.value = bookings.value.filter(b => String(b.id) !== String(id));
     alert('Ticket cancelled successfully!');
   }
