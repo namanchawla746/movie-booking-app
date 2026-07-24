@@ -5,7 +5,7 @@
       <div class="d-flex flex-wrap align-center justify-space-between ga-4">
         <div>
           <v-chip color="indigo-accent-2" size="small" class="font-weight-bold mb-2">Step 1: Select Theatre & Time</v-chip>
-          <h1 class="text-h4 font-weight-black text-white">{{ movie.title || 'Select Cinema' }}</h1>
+          <h1 class="text-h4 font-weight-black text-white">{{ movie.title || route.query.movieTitle || 'Select Cinema' }}</h1>
           <p class="text-caption text-grey-lighten-1 mb-0">Choose your preferred cinema hall, date, and showtime</p>
         </div>
 
@@ -112,7 +112,7 @@ const movie = ref({});
 const selectedChain = ref('All');
 const selectedDate = ref('Today');
 
-// Default fallback theatres list (In case API isn't populated)
+// Default fallback theatres list
 const defaultTheatres = [
   {
     id: 1,
@@ -153,23 +153,23 @@ const dates = [
 onMounted(async () => {
   const movieId = route.params.id || route.query.movieId;
   try {
-    // Fetch Movie details
-    if (movieId) {
-      const resMovie = await fetch(`/db.json/movies/${movieId}`);
-      if (resMovie.ok) {
-        movie.value = await resMovie.json();
+    const res = await fetch('/db.json');
+    if (res.ok) {
+      const data = await res.json();
+      
+      // Load movie by ID from unified db.json
+      if (movieId && data.movies) {
+        const foundMovie = data.movies.find(m => String(m.id) === String(movieId));
+        if (foundMovie) movie.value = foundMovie;
       }
-    }
-    // Fetch Theatres list
-    const resTheatres = await fetch('/db.json/theatres');
-    if (resTheatres.ok) {
-      const apiTheatres = await resTheatres.json();
-      if (apiTheatres && apiTheatres.length > 0) {
-        theatres.value = apiTheatres;
+      
+      // Load theatres from db.json if available
+      if (data.theatres && data.theatres.length > 0) {
+        theatres.value = data.theatres;
       }
     }
   } catch (err) {
-    console.warn('Using default theatres data due to fetch error:', err);
+    console.warn('Using default data due to fetch error:', err);
   }
 });
 
@@ -181,12 +181,11 @@ const filteredTheatres = computed(() => {
 });
 
 const selectShow = (theatre, showtime) => {
-  // Pass selected details to next step (Seat selection view)
   router.push({
-    path: '/seats', // Aapke seat selection route ka path (ya name: 'seats')
+    path: '/seats',
     query: {
-      movieId: movie.value.id || route.params.id || '1',
-      movieTitle: movie.value.title || 'Movie',
+      movieId: movie.value.id || route.params.id || route.query.movieId || '1',
+      movieTitle: movie.value.title || route.query.movieTitle || 'Movie',
       theatreId: theatre.id,
       theatreName: theatre.name,
       showtime: showtime,

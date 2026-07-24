@@ -70,24 +70,26 @@ const handleLogin = async () => {
 
   loading.value = true;
   try {
-    const res = await fetch('/db.json/users');
-    const users = await res.json();
+    // 1. Static db.json fetch karo
+    const res = await fetch('/db.json');
+    const data = await res.json();
+    
+    // 2. Full object me se users extract karo
+    const users = data.users || [];
 
     const cleanEmail = email.value.trim().toLowerCase();
     const cleanPassword = password.value.trim();
 
-    // Find matching user from db.json
+    // 3. Match user from db.json
     const foundUser = users.find(
       (u) => u.email && u.email.trim().toLowerCase() === cleanEmail && String(u.password).trim() === cleanPassword
     );
 
     if (foundUser) {
-      // Save state directly into authStore & localStorage ('currentUser')
       authStore.login(foundUser);
 
       alert('🎉 Login Successful!');
 
-      // Agar user booking/kisi specific page se redirect hokar aaya tha, toh wahan waapas bhejo
       const redirectPath = route.query.redirect || '/';
       router.push(redirectPath);
     } else {
@@ -95,7 +97,7 @@ const handleLogin = async () => {
     }
   } catch (err) {
     console.error('Login error:', err);
-    alert('❌ Failed to connect to server. Make sure json-server is running on port 3001!');
+    alert('❌ Could not load user data from db.json. Please check if db.json is in public folder.');
   } finally {
     loading.value = false;
   }

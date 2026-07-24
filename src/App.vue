@@ -26,7 +26,7 @@
               class="rounded-pill location-btn px-3 font-weight-bold text-none d-none d-sm-flex"
             >
               <v-icon color="red-accent-2" size="small" class="mr-1">mdi-map-marker</v-icon>
-              <span>{{ cityStore.selectedCity }}</span>
+              <span>{{ cityStore?.selectedCity || selectedCityFallback }}</span>
               <v-icon size="x-small" class="ml-1">mdi-chevron-down</v-icon>
             </v-btn>
           </template>
@@ -36,12 +36,12 @@
               v-for="city in cities"
               :key="city"
               :value="city"
-              @click="cityStore.setCity(city)"
+              @click="setCity(city)"
               class="city-item"
-              :class="{ 'active-city': cityStore.selectedCity === city }"
+              :class="{ 'active-city': getCurrentCity() === city }"
             >
               <template v-slot:prepend>
-                <v-icon size="small" :color="cityStore.selectedCity === city ? 'indigo-accent-2' : 'grey'">
+                <v-icon size="small" :color="getCurrentCity() === city ? 'indigo-accent-2' : 'grey'">
                   mdi-city
                 </v-icon>
               </template>
@@ -70,9 +70,9 @@
         <!-- ❤️ Wishlist Badge Button -->
         <v-btn to="/wishlist" variant="text" class="nav-btn" active-class="active-nav">
           <v-badge
-            :content="wishlistStore.wishlistCount"
+            :content="wishlistCount"
             color="red-accent-3"
-            v-if="wishlistStore.wishlistCount > 0"
+            v-if="wishlistCount > 0"
             offset-x="-2"
             offset-y="-2"
           >
@@ -83,15 +83,15 @@
         </v-btn>
         
         <!-- Visible when logged in -->
-        <v-btn v-if="auth.isLoggedIn()" to="/dashboard" variant="text" class="nav-btn" active-class="active-nav">
+        <v-btn v-if="isLoggedIn" to="/dashboard" variant="text" class="nav-btn" active-class="active-nav">
           <v-icon size="small" class="mr-1">mdi-ticket-confirmation</v-icon>
           <span>My Tickets</span>
         </v-btn>
 
         <!-- User Greeting & Action Buttons -->
-        <div v-if="auth.isLoggedIn()" class="d-flex align-center ga-2 ml-2">
+        <div v-if="isLoggedIn" class="d-flex align-center ga-2 ml-2">
           <v-chip color="indigo-lighten-4" variant="tonal" size="small" class="d-none d-md-flex font-weight-bold border-glass">
-            👋 {{ auth.user?.name }}
+            👋 {{ currentUser?.name || 'User' }}
           </v-chip>
           <v-btn @click="handleLogout" variant="outlined" color="red-accent-2" size="small" prepend-icon="mdi-logout" class="rounded-pill font-weight-bold text-none">
             Logout
@@ -174,7 +174,7 @@
               </template>
             </v-text-field>
           </v-col>
-        </v-row>
+        </row>
 
         <v-divider class="my-6 border-grey-darken-4"></v-divider>
 
@@ -190,19 +190,75 @@
 </template>
 
 <script setup>
+import { ref, computed, onMounted, watch } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 import { authStore as auth } from '@/stores/auth';
 import { useWishlistStore } from '@/stores/wishlist';
 import { cityStore } from '@/stores/city';
-import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const wishlistStore = useWishlistStore();
+const route = useRoute();
 
-// Options with 'All Cities' included
+let wishlistStore = null;
+try {
+  wishlistStore = useWishlistStore();
+} catch (e) {
+  console.warn('Wishlist store initialization fallback');
+}
+
 const cities = ['All Cities', 'Pune', 'Mumbai', 'Delhi NCR', 'Bengaluru', 'Hyderabad'];
+const selectedCityFallback = ref('All Cities');
+const currentUser = ref(null);
+const isLoggedIn = ref(false);
+
+const updateAuthState = () => {
+  if (auth && typeof auth.isLoggedIn === 'function') {
+    isLoggedIn.value = auth.isLoggedIn();
+    currentUser.value = auth.user;
+  } else {
+    const localUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+    isLoggedIn.value = !!localUser;
+    currentUser.value = localUser;
+  }
+};
+
+onMounted(() => {
+  updateAuthState();
+});
+
+watch(() => route.path, () => {
+  updateAuthState();
+});
+
+const wishlistCount = computed(() => {
+  if (wishlistStore && wishlistStore.wishlistCount !== undefined) {
+    return wishlistStore.wishlistCount;
+  }
+  return 0;
+});
+
+const getCurrentCity = () => {
+  if (cityStore && cityStore.selectedCity) {
+    return cityStore.selectedCity;
+  }
+  return selectedCityFallback.value;
+};
+
+const setCity = (city) => {
+  if (cityStore && typeof cityStore.setCity === 'function') {
+    cityStore.setCity(city);
+  } else {
+    selectedCityFallback.value = city;
+  }
+};
 
 const handleLogout = () => {
-  auth.logout();
+  if (auth && typeof auth.logout === 'function') {
+    auth.logout();
+  } else {
+    localStorage.removeItem('currentUser');
+  }
+  updateAuthState();
   router.push('/login');
 };
 </script>

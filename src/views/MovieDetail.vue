@@ -15,8 +15,8 @@
       <!-- Movie Details -->
       <v-col cols="12" md="8">
         <div class="d-flex align-center ga-3 mb-2">
-          <v-chip color="amber-accent-3" class="font-weight-black">⭐ {{ movie.rating }}</v-chip>
-          <v-chip color="indigo-accent-3" class="font-weight-bold">{{ movie.genre }}</v-chip>
+          <v-chip color="amber-accent-3" class="font-weight-black">⭐ {{ movie.rating || '4.5' }}</v-chip>
+          <v-chip color="indigo-accent-3" class="font-weight-bold">{{ movie.genre || 'Action' }}</v-chip>
           <v-chip v-if="movie.category" color="grey-darken-2" variant="tonal" class="text-caption">
             {{ movie.category }}
           </v-chip>
@@ -136,6 +136,12 @@
       </v-card>
     </v-dialog>
   </v-container>
+
+  <!-- Loading / Not Found Fallback -->
+  <v-container v-else class="py-16 text-center">
+    <v-progress-circular indeterminate color="indigo-accent-2" size="64" class="mb-4"></v-progress-circular>
+    <h2 class="text-h6 text-grey-lighten-1">Loading movie details...</h2>
+  </v-container>
 </template>
 
 <script setup>
@@ -160,14 +166,18 @@ const theatres = [
 const dateMenu = ref(false);
 const selectedDate = ref(new Date());
 
-// Format Minimum Date (Today)
-const minDate = new Date().toISOString().substring(0, 10);
+// Minimum Date (Today)
+const today = new Date();
+const minDate = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
 
-// Format Selected Date to YYYY-MM-DD
+// Format Selected Date to YYYY-MM-DD cleanly
 const formattedDate = computed(() => {
-  if (!selectedDate.value) return '';
+  if (!selectedDate.value) return minDate;
   const d = new Date(selectedDate.value);
-  return d.toISOString().split('T')[0];
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 });
 
 // Showtimes
@@ -177,16 +187,37 @@ const selectedShowtime = ref('10:00 AM');
 // Trailer Dialog
 const showTrailer = ref(false);
 
+// Fallback Movie Data agar static fetch fail ho
+const defaultMovie = {
+  id: Number(route.params.id) || 1,
+  title: 'Inception',
+  description: 'A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.',
+  rating: '8.8',
+  genre: 'Sci-Fi / Action',
+  category: 'Blockbuster',
+  image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=400',
+  trailerUrl: 'https://www.youtube.com/embed/YoHD9XEInc0'
+};
+
 onMounted(async () => {
   try {
-    const res = await fetch(`/db.json/movies/${route.params.id}`);
-    movie.value = await res.json();
+    // Single static db.json fetch
+    const res = await fetch('/db.json');
+    if (res.ok) {
+      const data = await res.json();
+      const foundMovie = data.movies?.find(m => String(m.id) === String(route.params.id));
+      movie.value = foundMovie || defaultMovie;
+    } else {
+      movie.value = defaultMovie;
+    }
   } catch (err) {
-    console.error('Failed to load movie details:', err);
+    console.error('Failed to load movie details, using default:', err);
+    movie.value = defaultMovie;
   }
 });
 
 const goToSeatSelection = () => {
+  if (!movie.value) return;
   router.push({
     path: `/book/${movie.value.id}/${formattedDate.value}/${encodeURIComponent(selectedShowtime.value)}`,
     query: {

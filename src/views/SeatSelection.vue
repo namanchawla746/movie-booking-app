@@ -149,7 +149,7 @@
                 hide-details
                 color="indigo-accent-2"
               ></v-text-field>
-              <v-btn color="indigo-accent-3" density="compact" class="font-weight-bold my-auto" height="40" @click="applyPromo">
+              <v-btn color="indigo-accent-3" density="compact" class="font-weight-bold my-auto text-none" height="40" @click="applyPromo">
                 Apply
               </v-btn>
             </div>
@@ -183,7 +183,7 @@
             color="indigo-accent-3"
             size="large"
             block
-            class="rounded-xl font-weight-bold text-white shadow-btn"
+            class="rounded-xl font-weight-bold text-white shadow-btn text-none"
             :disabled="selectedSeats.length === 0"
             @click="openPaymentModal"
           >
@@ -209,7 +209,7 @@
           color="indigo-accent-3"
           size="large"
           block
-          class="rounded-xl font-weight-bold text-white shadow-btn"
+          class="rounded-xl font-weight-bold text-white shadow-btn text-none"
           :loading="bookingLoading"
           @click="confirmBooking"
         >
@@ -229,7 +229,7 @@ const route = useRoute();
 const router = useRouter();
 const movie = ref(null);
 
-// Route params aur queries se safe values read karo
+// Safe computed getters from query/params
 const showtime = computed(() => {
   return route.query.showtime || (route.params.showtime ? decodeURIComponent(route.params.showtime) : '07:00 PM');
 });
@@ -267,9 +267,13 @@ onMounted(async () => {
   const movieId = route.params.id || route.query.movieId;
   if (movieId) {
     try {
-      const res = await fetch(`/db.json/movies/${movieId}`);
+      const res = await fetch('/db.json');
       if (res.ok) {
-        movie.value = await res.json();
+        const data = await res.json();
+        const found = (data.movies || []).find(m => String(m.id) === String(movieId));
+        if (found) {
+          movie.value = found;
+        }
       }
     } catch (err) {
       console.error('Error loading movie:', err);
@@ -309,7 +313,7 @@ const updateSnackQty = (snack, delta) => {
 
 // Price Calculations
 const rawTotal = computed(() => {
-  const ticketPrice = movie.value?.price || 250; // Fallback price ₹250
+  const ticketPrice = movie.value?.price || 250;
   return selectedSeats.value.length * ticketPrice;
 });
 
@@ -341,29 +345,29 @@ const openPaymentModal = () => {
 const confirmBooking = async () => {
   bookingLoading.value = true;
 
-  const currentUser = authStore.user || JSON.parse(localStorage.getItem('currentUser'));
+  const currentUser = authStore?.user || JSON.parse(localStorage.getItem('currentUser'));
 
   // Complete Ticket Object with Theatre Info & Snacks
   const ticketData = {
+    id: 'BK-' + Date.now(),
     userId: currentUser?.id || 1,
     userEmail: currentUser?.email || 'user@example.com',
     movieTitle: movie.value?.title || route.query.movieTitle || 'Movie Ticket',
     theatre: theatreName.value,
     theatreName: theatreName.value,
     showtime: `${selectedDate.value} | ${showtime.value}`,
-    seats: selectedSeats.value,
-    snacks: selectedSnacks.value,
+    seats: [...selectedSeats.value],
+    snacks: [...selectedSnacks.value],
     totalPaid: finalTotal.value,
     paymentMethod: selectedPayment.value,
     bookingDate: new Date().toLocaleDateString()
   };
 
   try {
-    await fetch('/db.json/bookings', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(ticketData)
-    });
+    // Save to LocalStorage for static client persistence
+    const existingBookings = JSON.parse(localStorage.getItem('userBookings') || '[]');
+    existingBookings.unshift(ticketData);
+    localStorage.setItem('userBookings', JSON.stringify(existingBookings));
 
     showPaymentModal.value = false;
     alert('🎟️ Ticket & Food Booked Successfully!');

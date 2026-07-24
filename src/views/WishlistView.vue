@@ -5,13 +5,13 @@
         <v-icon color="red-accent-3">mdi-heart</v-icon> My Wishlist
       </h1>
       <v-chip color="red-accent-3" class="font-weight-bold">
-        {{ wishlistStore.wishlistCount }} Movies
+        {{ wishlistCount }} Movies
       </v-chip>
     </div>
 
     <!-- Empty Wishlist State -->
     <v-card 
-      v-if="wishlistStore.wishlist.length === 0" 
+      v-if="!wishlistItems || wishlistItems.length === 0" 
       color="#12141c" 
       class="pa-12 text-center rounded-24 border-glass my-8"
     >
@@ -26,7 +26,7 @@
     <!-- Wishlist Movies Grid -->
     <v-row v-else>
       <v-col
-        v-for="movie in wishlistStore.wishlist"
+        v-for="movie in wishlistItems"
         :key="movie.id"
         cols="12"
         sm="6"
@@ -41,31 +41,31 @@
               icon="mdi-close"
               size="small"
               color="red-accent-3"
-              class="position-absolute top-0 right-0 ma-3"
-              @click="wishlistStore.toggleWishlist(movie)"
+              class="position-absolute top-0 right-0 ma-3 elevation-4"
+              @click="removeFromWishlist(movie)"
             ></v-btn>
 
             <v-chip color="amber-accent-3" class="position-absolute bottom-0 left-0 ma-3 font-weight-black" size="small">
-              ⭐ {{ movie.rating }}
+              ⭐ {{ movie.rating || '4.5' }}
             </v-chip>
           </div>
 
           <v-card-item class="pt-4">
-            <div class="text-caption text-indigo-accent-2 font-weight-bold mb-1">{{ movie.genre }}</div>
+            <div class="text-caption text-indigo-accent-2 font-weight-bold mb-1">{{ movie.genre || 'Action / Drama' }}</div>
             <h3 class="text-h6 font-weight-black text-white text-truncate">{{ movie.title }}</h3>
           </v-card-item>
 
           <v-card-text class="text-grey-lighten-1 text-body-2 line-clamp-2 pt-0 flex-grow-1">
-            {{ movie.description }}
+            {{ movie.description || 'No description available for this movie.' }}
           </v-card-text>
 
           <v-card-actions class="pa-4 pt-0 justify-space-between align-center">
-            <div class="text-h6 font-weight-bold text-white">₹{{ movie.price }}</div>
+            <div class="text-h6 font-weight-bold text-white">₹{{ movie.price || '250' }}</div>
             <v-btn
               color="indigo-accent-2"
               variant="flat"
               class="rounded-xl font-weight-bold text-none px-6"
-              :to="`/movie/${movie.id}`"
+              :to="`/select-theatre/${movie.id}?movieTitle=${encodeURIComponent(movie.title)}`"
             >
               Book Now
             </v-btn>
@@ -77,9 +77,26 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import { useWishlistStore } from '../stores/wishlist';
 
 const wishlistStore = useWishlistStore();
+
+const wishlistItems = computed(() => {
+  return wishlistStore?.wishlist || [];
+});
+
+const wishlistCount = computed(() => {
+  return wishlistStore?.wishlistCount || wishlistItems.value.length;
+});
+
+const removeFromWishlist = (movie) => {
+  if (wishlistStore?.toggleWishlist) {
+    wishlistStore.toggleWishlist(movie);
+  } else if (wishlistStore?.removeFromWishlist) {
+    wishlistStore.removeFromWishlist(movie);
+  }
+};
 </script>
 
 <style scoped>
@@ -96,5 +113,14 @@ const wishlistStore = useWishlistStore();
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.hover-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(99, 102, 241, 0.2) !important;
 }
 </style>

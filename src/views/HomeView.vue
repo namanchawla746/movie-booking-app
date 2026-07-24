@@ -103,7 +103,7 @@
         @click="resetFilters"
       >
         Reset Filters
-      </v-btn>
+      </btn>
     </div>
 
     <!-- 🍿 Movie Cards Grid -->
@@ -297,12 +297,13 @@ const sortOptions = ['Popularity', 'Rating: High to Low', 'Price: Low to High', 
 
 onMounted(async () => {
   try {
-    const [resMovies, resUpcoming] = await Promise.all([
-      fetch('/db.json/movies'),
-      fetch('/db.json/upcomingMovies')
-    ]);
-    movies.value = await resMovies.json();
-    upcomingMovies.value = await resUpcoming.json();
+    // Single static db.json file fetch kar rahe hain
+    const res = await fetch('/db.json');
+    const data = await res.json();
+    
+    // Exact arrays assign kar rahe hain
+    movies.value = data.movies || [];
+    upcomingMovies.value = data.upcomingMovies || [];
   } catch (err) {
     console.error('Failed to load home page data:', err);
   }

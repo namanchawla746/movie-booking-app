@@ -240,7 +240,7 @@ const showPaymentModal = ref(false);
 const selectedPayment = ref('UPI');
 const checkoutLoading = ref(false);
 
-// Fallback food items agar db.json empty ya missing ho
+// Fallback food items agar db.json me items absent ho
 const fallbackFoodItems = [
   { id: 101, name: 'Caramel Popcorn (Large)', price: 320, category: 'Popcorn', calories: '450 kcal', image: 'https://images.unsplash.com/photo-1578849278619-e73505e9610f?q=80&w=400', tag: 'Bestseller' },
   { id: 102, name: 'Cheese & Butter Popcorn', price: 290, category: 'Popcorn', calories: '410 kcal', image: 'https://images.unsplash.com/photo-1585647347384-2593bc35786b?q=80&w=400', tag: 'Must Try' },
@@ -250,15 +250,16 @@ const fallbackFoodItems = [
 
 onMounted(async () => {
   try {
-    const res = await fetch('/db.json/foodItems');
+    // Correct single fetch from public /db.json
+    const res = await fetch('/db.json');
     if (res.ok) {
       const data = await res.json();
-      foodItems.value = data.length > 0 ? data : fallbackFoodItems;
+      foodItems.value = (data.foodItems && data.foodItems.length > 0) ? data.foodItems : fallbackFoodItems;
     } else {
       foodItems.value = fallbackFoodItems;
     }
   } catch (err) {
-    console.error('Failed to load food items, using fallbacks', err);
+    console.error('Failed to load food items, using fallbacks:', err);
     foodItems.value = fallbackFoodItems;
   }
 });
@@ -301,18 +302,17 @@ const gstAmount = computed(() => Math.round(subtotal.value * 0.18));
 
 const grandTotal = computed(() => subtotal.value + gstAmount.value);
 
-// Open Payment Dialog Modal
 const proceedToCheckout = () => {
   if (cartItems.value.length === 0) return;
   showPaymentModal.value = true;
 };
 
-// Confirm and save order into JSON Server
 const confirmOrder = async () => {
   checkoutLoading.value = true;
   const currentUser = authStore.user || JSON.parse(localStorage.getItem('currentUser'));
 
   const orderData = {
+    id: Date.now(),
     userId: currentUser?.id || 1,
     userEmail: currentUser?.email || 'user@example.com',
     movieTitle: 'Cinema Snacks Pass 🍿',
@@ -325,30 +325,24 @@ const confirmOrder = async () => {
     bookingDate: new Date().toLocaleDateString()
   };
 
+  // Local storage backup for offline/static deployment
   try {
-    const res = await fetch('/db.json/bookings', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(orderData)
-    });
+    const existingBookings = JSON.parse(localStorage.getItem('userBookings') || '[]');
+    existingBookings.push(orderData);
+    localStorage.setItem('userBookings', JSON.stringify(existingBookings));
 
-    if (res.ok) {
-      showPaymentModal.value = false;
-      alert('🍿 Snacks Order Confirmed Successfully!');
-      cart.value = {};
-      router.push('/dashboard');
-    } else {
-      alert('Failed to place order. Try again.');
-    }
+    showPaymentModal.value = false;
+    alert('🍿 Snacks Order Confirmed Successfully!');
+    cart.value = {};
+    router.push('/dashboard');
   } catch (err) {
-    console.error('Error completing checkout:', err);
-    alert('Failed to connect to backend server!');
+    console.error('Error completing order:', err);
+    alert('Failed to place order. Try again.');
   } finally {
     checkoutLoading.value = false;
   }
 };
 
-// Skip Button Action
 const skipFood = () => {
   router.push('/dashboard');
 };

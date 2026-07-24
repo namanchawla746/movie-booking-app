@@ -1,6 +1,6 @@
 <template>
   <v-container class="fill-height justify-center">
-    <v-card width="420" color="#12141c" class="pa-6 rounded-xl elevation-12">
+    <v-card width="420" color="#12141c" class="pa-6 rounded-xl elevation-12 border-glass">
       <div class="text-center mb-6">
         <h2 class="text-h4 font-weight-black text-white">Create Account 🎬</h2>
         <p class="text-caption text-grey">Join CinePass for instant ticket booking</p>
@@ -43,7 +43,7 @@
           block
           color="indigo-accent-3"
           size="large"
-          class="rounded-lg font-weight-bold"
+          class="rounded-lg font-weight-bold text-none"
           :loading="loading"
         >
           Register
@@ -52,7 +52,7 @@
 
       <div class="text-center mt-6 text-body-2 text-grey">
         Already have an account?
-        <router-link to="/login" class="text-indigo-accent-2 font-weight-bold text-decoration-none">
+        <router-link to="/login" class="text-indigo-accent-2 font-weight-bold text-decoration-none ms-1">
           Login Here
         </router-link>
       </div>
@@ -71,26 +71,48 @@ const loading = ref(false);
 const router = useRouter();
 
 const handleRegister = async () => {
+  if (!name.value || !email.value || !password.value) {
+    alert('Please fill in all fields.');
+    return;
+  }
+
   loading.value = true;
+
   try {
     const newUser = {
+      id: Date.now(),
       name: name.value,
-      email: email.value,
+      email: email.value.trim().toLowerCase(),
       password: password.value
     };
 
-    await fetch('/db.json/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newUser)
-    });
+    // Store created user in localStorage for client-side persistence
+    const existingUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+    
+    // Check if email already exists
+    const userExists = existingUsers.some(u => u.email === newUser.email);
+    if (userExists) {
+      alert('An account with this email already exists!');
+      loading.value = false;
+      return;
+    }
 
-    alert('🎉 Account created! Please login now.');
+    existingUsers.push(newUser);
+    localStorage.setItem('registeredUsers', JSON.stringify(existingUsers));
+
+    alert('🎉 Account created successfully! Please login now.');
     router.push('/login');
   } catch (err) {
-    alert('Failed to register');
+    console.error('Registration error:', err);
+    alert('Failed to register. Please try again.');
   } finally {
     loading.value = false;
   }
 };
 </script>
+
+<style scoped>
+.border-glass {
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+</style>
