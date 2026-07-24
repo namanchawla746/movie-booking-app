@@ -179,7 +179,7 @@ const showTrailer = ref(false);
 
 onMounted(async () => {
   try {
-    const res = await fetch(`http://localhost:3001/movies/${route.params.id}`);
+    const res = await fetch(`/db.json/movies/${route.params.id}`);
     movie.value = await res.json();
   } catch (err) {
     console.error('Failed to load movie details:', err);

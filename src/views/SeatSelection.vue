@@ -267,7 +267,7 @@ onMounted(async () => {
   const movieId = route.params.id || route.query.movieId;
   if (movieId) {
     try {
-      const res = await fetch(`http://localhost:3001/movies/${movieId}`);
+      const res = await fetch(`/db.json/movies/${movieId}`);
       if (res.ok) {
         movie.value = await res.json();
       }
@@ -359,7 +359,7 @@ const confirmBooking = async () => {
   };
 
   try {
-    await fetch('http://localhost:3001/bookings', {
+    await fetch('/db.json/bookings', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(ticketData)

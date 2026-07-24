@@ -79,7 +79,7 @@ const handleRegister = async () => {
       password: password.value
     };
 
-    await fetch('http://localhost:3001/users', {
+    await fetch('/db.json/users', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newUser)

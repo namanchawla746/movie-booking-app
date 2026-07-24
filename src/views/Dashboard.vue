@@ -181,7 +181,7 @@ const loading = ref(true);
 const fetchBookings = async () => {
   loading.value = true;
   try {
-    const res = await fetch('http://localhost:3001/bookings');
+    const res = await fetch('/db.json/bookings');
     const allBookings = await res.json();
     
     // Logged-in user fetch karo
@@ -209,7 +209,7 @@ onMounted(() => {
 const cancelTicket = async (id) => {
   if (confirm('Are you sure you want to cancel this booking?')) {
     try {
-      await fetch(`http://localhost:3001/bookings/${id}`, {
+      await fetch(`/db.json/bookings/${id}`, {
         method: 'DELETE'
       });
       alert('Ticket cancelled successfully!');

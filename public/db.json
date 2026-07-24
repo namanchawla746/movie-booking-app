@@ -277,9 +277,115 @@
       "email": "naman@testgmail.com",
       "password": "123456",
       "id": "MvNJz2Wc3U4"
+    },
+    {
+      "name": "Naman",
+      "email": "naman@test.com",
+      "password": "12",
+      "id": "XDLB9R-9f8A"
+    },
+    {
+      "name": "Naman",
+      "email": "naman@test.com",
+      "password": "12",
+      "id": "6_gSSzedt9k"
+    },
+    {
+      "name": "Naman",
+      "email": "naman@test.com",
+      "password": "123456",
+      "id": "DFG9p7lkoVQ"
     }
   ],
-  "bookings": [],
+  "bookings": [
+    {
+      "userId": "pctOTRqjyLM",
+      "userEmail": "naman@test.com",
+      "movieTitle": "Inception",
+      "theatre": "PVR Superplex, Mall of India",
+      "theatreName": "PVR Superplex, Mall of India",
+      "showtime": "2026-07-24 | 05:00 PM",
+      "seats": [
+        "C3",
+        "C4"
+      ],
+      "snacks": [
+        {
+          "id": 1,
+          "name": "Large Popcorn (Salted)",
+          "price": 290,
+          "icon": "🍿",
+          "qty": 1
+        },
+        {
+          "id": 2,
+          "name": "Pepsi / Coca Cola (500ml)",
+          "price": 180,
+          "icon": "🥤",
+          "qty": 1
+        }
+      ],
+      "totalPaid": 980,
+      "paymentMethod": "NetBanking",
+      "bookingDate": "24/07/2026",
+      "id": "dhbUB3bs08Y"
+    },
+    {
+      "userId": "pctOTRqjyLM",
+      "userEmail": "naman@test.com",
+      "movieTitle": "Inception",
+      "theatre": "PVR Superplex, Mall of India",
+      "theatreName": "PVR Superplex, Mall of India",
+      "showtime": "2026-07-24 | 05:00 PM",
+      "seats": [
+        "D4",
+        "C3",
+        "C2",
+        "D2",
+        "D3",
+        "C4",
+        "B4",
+        "A3",
+        "B1",
+        "B2",
+        "A2",
+        "A1",
+        "C1",
+        "D1",
+        "B3",
+        "A4",
+        "A5",
+        "A6",
+        "B6",
+        "B5",
+        "C5",
+        "D6",
+        "D5",
+        "C6"
+      ],
+      "snacks": [],
+      "totalPaid": 6720,
+      "paymentMethod": "UPI",
+      "bookingDate": "24/07/2026",
+      "id": "B9M6Y2o2hNM"
+    },
+    {
+      "userId": "pctOTRqjyLM",
+      "userEmail": "naman@test.com",
+      "movieTitle": "Inception",
+      "theatre": "PVR Inox, Select Citywalk",
+      "theatreName": "PVR Inox, Select Citywalk",
+      "showtime": "2026-07-24 | 05:00 PM",
+      "seats": [
+        "A4"
+      ],
+      "snacks": [],
+      "totalPaid": 280,
+      "paymentMethod": "UPI",
+      "bookingDate": "24/07/2026",
+      "id": "3R5a6IJoITQ"
+    }
+  ],
   "foodItems": [
     {
       "id": "f1",

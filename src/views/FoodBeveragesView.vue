@@ -250,7 +250,7 @@ const fallbackFoodItems = [
 
 onMounted(async () => {
   try {
-    const res = await fetch('http://localhost:3001/foodItems');
+    const res = await fetch('/db.json/foodItems');
     if (res.ok) {
       const data = await res.json();
       foodItems.value = data.length > 0 ? data : fallbackFoodItems;
@@ -326,7 +326,7 @@ const confirmOrder = async () => {
   };
 
   try {
-    const res = await fetch('http://localhost:3001/bookings', {
+    const res = await fetch('/db.json/bookings', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(orderData)

@@ -155,13 +155,13 @@ onMounted(async () => {
   try {
     // Fetch Movie details
     if (movieId) {
-      const resMovie = await fetch(`http://localhost:3001/movies/${movieId}`);
+      const resMovie = await fetch(`/db.json/movies/${movieId}`);
       if (resMovie.ok) {
         movie.value = await resMovie.json();
       }
     }
     // Fetch Theatres list
-    const resTheatres = await fetch('http://localhost:3001/theatres');
+    const resTheatres = await fetch('/db.json/theatres');
     if (resTheatres.ok) {
       const apiTheatres = await resTheatres.json();
       if (apiTheatres && apiTheatres.length > 0) {

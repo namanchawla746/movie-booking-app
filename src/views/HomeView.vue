@@ -298,8 +298,8 @@ const sortOptions = ['Popularity', 'Rating: High to Low', 'Price: Low to High', 
 onMounted(async () => {
   try {
     const [resMovies, resUpcoming] = await Promise.all([
-      fetch('http://localhost:3001/movies'),
-      fetch('http://localhost:3001/upcomingMovies')
+      fetch('/db.json/movies'),
+      fetch('/db.json/upcomingMovies')
     ]);
     movies.value = await resMovies.json();
     upcomingMovies.value = await resUpcoming.json();

@@ -70,7 +70,7 @@ const handleLogin = async () => {
 
   loading.value = true;
   try {
-    const res = await fetch('http://localhost:3001/users');
+    const res = await fetch('/db.json/users');
     const users = await res.json();
 
     const cleanEmail = email.value.trim().toLowerCase();
