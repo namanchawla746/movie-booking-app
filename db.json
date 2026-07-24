@@ -1,0 +1,340 @@
+{
+  "movies": [
+    {
+      "id": "1",
+      "title": "Interstellar",
+      "genre": "Sci-Fi / Adventure",
+      "category": "Trending",
+      "viewerType": "Sci-Fi Lovers",
+      "rating": "4.9",
+      "price": 250,
+      "image": "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=600&auto=format&fit=crop",
+      "description": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+      "trailerUrl": "https://www.youtube.com/embed/zSWdZVtXT7E",
+      "city": [
+        "Mumbai",
+        "Delhi NCR",
+        "Bangalore",
+        "Pune",
+        "Hyderabad"
+      ]
+    },
+    {
+      "id": "2",
+      "title": "The Dark Knight",
+      "genre": "Action / Crime",
+      "category": "Blockbuster",
+      "viewerType": "Action Fans",
+      "rating": "4.9",
+      "price": 300,
+      "image": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=600&auto=format&fit=crop",
+      "description": "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.",
+      "trailerUrl": "https://www.youtube.com/embed/EXeTwQWrcwY",
+      "city": [
+        "Mumbai",
+        "Delhi NCR",
+        "Bangalore",
+        "Pune",
+        "Hyderabad"
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Inception",
+      "genre": "Sci-Fi / Action",
+      "category": "Trending",
+      "viewerType": "Mind Bending",
+      "rating": "4.8",
+      "price": 280,
+      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=600&auto=format&fit=crop",
+      "description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
+      "trailerUrl": "https://www.youtube.com/embed/YoHD9XEInc0",
+      "city": [
+        "Mumbai",
+        "Delhi NCR",
+        "Bangalore",
+        "Pune",
+        "Hyderabad"
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Avatar: The Way of Water",
+      "genre": "Sci-Fi / Fantasy",
+      "category": "Visual Masterpiece",
+      "viewerType": "3D Cinema Experience",
+      "rating": "4.7",
+      "price": 350,
+      "image": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600&auto=format&fit=crop",
+      "description": "Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what was previously started, Jake must work with Neytiri.",
+      "trailerUrl": "https://www.youtube.com/embed/d9MyW72ELq0",
+      "city": [
+        "Mumbai",
+        "Delhi NCR",
+        "Bangalore",
+        "Pune",
+        "Hyderabad"
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Spider-Man: Across the Spider-Verse",
+      "genre": "Animation / Action",
+      "category": "Trending",
+      "viewerType": "Family & Youth",
+      "rating": "4.7",
+      "price": 260,
+      "image": "https://images.unsplash.com/photo-1635863138275-d9b33299680b?q=80&w=600&auto=format&fit=crop",
+      "description": "Miles Morales catapults across the Multiverse, where he encounters a team of Spider-People charged with protecting its very existence.",
+      "trailerUrl": "https://www.youtube.com/embed/cqGjhVJWtEg",
+      "city": [
+        "Mumbai",
+        "Delhi NCR",
+        "Bangalore",
+        "Pune",
+        "Hyderabad"
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Oppenheimer",
+      "genre": "Biography / Drama",
+      "category": "Critically Acclaimed",
+      "viewerType": "Drama & History",
+      "rating": "4.8",
+      "price": 320,
+      "image": "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?q=80&w=600&auto=format&fit=crop",
+      "description": "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb.",
+      "trailerUrl": "https://www.youtube.com/embed/uYPbbksJxIg",
+      "city": [
+        "Mumbai",
+        "Delhi NCR",
+        "Bangalore",
+        "Pune",
+        "Hyderabad"
+      ]
+    }
+  ],
+  "upcomingMovies": [
+    {
+      "id": "u1",
+      "title": "Dune: Part Three",
+      "genre": "Sci-Fi / Adventure",
+      "releaseDate": "Oct 2026",
+      "image": "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?q=80&w=600&auto=format&fit=crop",
+      "trailerUrl": "https://www.youtube.com/embed/Way9Dexny3w",
+      "description": "The epic continuation of Paul Atreides' journey across Arrakis."
+    },
+    {
+      "id": "u2",
+      "title": "The Batman Part II",
+      "genre": "Action / Crime",
+      "releaseDate": "Dec 2026",
+      "image": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600&auto=format&fit=crop",
+      "trailerUrl": "https://www.youtube.com/embed/EXeTwQWrcwY",
+      "description": "Bruce Wayne continues his vigilante crusade in Gotham City."
+    },
+    {
+      "id": "u3",
+      "title": "Avengers: Secret Wars",
+      "genre": "Action / Sci-Fi",
+      "releaseDate": "May 2027",
+      "image": "https://images.unsplash.com/photo-1635863138275-d9b33299680b?q=80&w=600&auto=format&fit=crop",
+      "trailerUrl": "https://www.youtube.com/embed/cqGjhVJWtEg",
+      "description": "The ultimate multiverse showdown assembling heroes across dimensions."
+    }
+  ],
+  "theatres": [
+    {
+      "id": "th-1",
+      "name": "Cinepolis: Seasons Mall",
+      "location": "Magarpatta, Pune",
+      "city": "Pune",
+      "chain": "Cinepolis",
+      "facilities": [
+        "4DX",
+        "Dolby Atmos",
+        "VIP Recliners"
+      ],
+      "shows": [
+        "10:30 AM",
+        "01:45 PM",
+        "05:15 PM",
+        "08:30 PM",
+        "11:00 PM"
+      ]
+    },
+    {
+      "id": "th-2",
+      "name": "PVR: Phoenix Marketcity",
+      "location": "Viman Nagar, Pune",
+      "city": "Pune",
+      "chain": "PVR",
+      "facilities": [
+        "IMAX 3D",
+        "Dolby Atmos",
+        "PVR Gold"
+      ],
+      "shows": [
+        "11:00 AM",
+        "02:30 PM",
+        "06:00 PM",
+        "09:30 PM"
+      ]
+    },
+    {
+      "id": "th-3",
+      "name": "INOX: Amanora Mall",
+      "location": "Hadapsar, Pune",
+      "city": "Pune",
+      "chain": "INOX",
+      "facilities": [
+        "INSIGNIA",
+        "Dolby Digital 7.1"
+      ],
+      "shows": [
+        "09:45 AM",
+        "01:00 PM",
+        "04:15 PM",
+        "07:30 PM",
+        "10:45 PM"
+      ]
+    },
+    {
+      "id": "th-4",
+      "name": "Cinepolis: Westend Mall",
+      "location": "Aundh, Pune",
+      "city": "Pune",
+      "chain": "Cinepolis",
+      "facilities": [
+        "Macro XE",
+        "Dolby Atmos"
+      ],
+      "shows": [
+        "11:15 AM",
+        "03:00 PM",
+        "07:00 PM",
+        "10:15 PM"
+      ]
+    },
+    {
+      "id": "th-5",
+      "name": "PVR: Orion Mall",
+      "location": "Goregaon, Mumbai",
+      "city": "Mumbai",
+      "chain": "PVR",
+      "facilities": [
+        "IMAX 4K",
+        "Dolby Atmos"
+      ],
+      "shows": [
+        "12:00 PM",
+        "03:30 PM",
+        "07:15 PM",
+        "10:30 PM"
+      ]
+    },
+    {
+      "id": "th-6",
+      "name": "INOX: Select CITYWALK",
+      "location": "Saket, Delhi NCR",
+      "city": "Delhi NCR",
+      "chain": "INOX",
+      "facilities": [
+        "INSIGNIA",
+        "Dolby Atmos"
+      ],
+      "shows": [
+        "11:30 AM",
+        "02:45 PM",
+        "06:15 PM",
+        "09:45 PM"
+      ]
+    }
+  ],
+  "wishlist": [],
+  "users": [
+    {
+      "name": "n",
+      "email": "naman@test.com",
+      "password": "123456",
+      "id": "DyvVP9FIeSU"
+    },
+    {
+      "name": "nn",
+      "email": "naman@test.com",
+      "password": "12",
+      "id": "pctOTRqjyLM"
+    },
+    {
+      "name": "ee",
+      "email": "naman@test.com",
+      "password": "12",
+      "id": "6y6mDcjxWQE"
+    },
+    {
+      "name": "nn",
+      "email": "naman@testgmail.com",
+      "password": "123456",
+      "id": "MvNJz2Wc3U4"
+    }
+  ],
+  "bookings": [],
+  "foodItems": [
+    {
+      "id": "f1",
+      "name": "Caramel Popcorn (Large)",
+      "category": "Popcorn",
+      "price": 320,
+      "calories": "450 kcal",
+      "image": "https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=500&q=80",
+      "tag": "Bestseller"
+    },
+    {
+      "id": "f2",
+      "name": "Cheese & Butter Popcorn",
+      "category": "Popcorn",
+      "price": 290,
+      "calories": "410 kcal",
+      "image": "https://images.unsplash.com/photo-1585647347483-22b66260dfff?auto=format&fit=crop&w=500&q=80",
+      "tag": "Must Try"
+    },
+    {
+      "id": "f3",
+      "name": "Cold Coffee with Ice Cream",
+      "category": "Beverages",
+      "price": 210,
+      "calories": "280 kcal",
+      "image": "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=500&q=80",
+      "tag": "Popular"
+    },
+    {
+      "id": "f4",
+      "name": "Pepsi Zero Sugar (500ml)",
+      "category": "Beverages",
+      "price": 180,
+      "calories": "0 kcal",
+      "image": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=500&q=80",
+      "tag": ""
+    },
+    {
+      "id": "f5",
+      "name": "Loaded Nachos with Salsa",
+      "category": "Snacks",
+      "price": 260,
+      "calories": "520 kcal",
+      "image": "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?auto=format&fit=crop&w=500&q=80",
+      "tag": "Chef Special"
+    },
+    {
+      "id": "f6",
+      "name": "Classic Veg Burger Combo",
+      "category": "Combos",
+      "price": 450,
+      "calories": "680 kcal",
+      "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80",
+      "tag": "Saver Combo"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

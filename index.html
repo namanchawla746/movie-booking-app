@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinePass - Premium Movie Booking</title>
+    
+    <!-- Google Fonts for Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+      /* Base Amoled Dark Theme Styling */
+      html, body {
+        background-color: #08090c !important; /* Rich Pitch Black */
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        margin: 0;
+        padding: 0;
+        color: #f3f4f6;
+        min-height: 100vh;
+      }
+
+      /* Vuetify Root App Override */
+      .v-application {
+        background-color: #08090c !important;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+      }
+
+      /* Modern Glassmorphism & Hover Glow for Cards */
+      .v-card {
+        background-color: #12141c !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+        backdrop-filter: blur(12px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      }
+
+      .v-card:hover {
+        border-color: rgba(99, 102, 241, 0.5) !important;
+        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2) !important;
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
